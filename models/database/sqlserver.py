@@ -1,11 +1,15 @@
 import pyodbc
+from models.system import database
+
 
 class sqlserver:
     """
     This class is responsible for connecting to a SQL Server database and executing queries.
     """
 
-    def __init__(self, server, database, username, password):
+    settings = database.database()
+
+    def __init__(self):
         """
         The constructor for SQLServerConnector class.
 
@@ -15,10 +19,10 @@ class sqlserver:
             username (str): The username for the database.
             password (str): The password for the database.
         """
-        self.server = server
-        self.database = database
-        self.username = username
-        self.password = password
+        self.server = self.settings.server_name
+        self.database = self.settings.database
+        self.username = self.settings.username
+        self.password = self.settings.password
         self.driver = '{ODBC Driver 17 for SQL Server}'
 
     def connect(self):
@@ -48,10 +52,15 @@ class sqlserver:
         # Execute the query
         self.cursor.execute(query)
 
-        # Fetch all rows from the executed query
-        rows = self.cursor.fetchall()
-
-        return rows
+        # Check if the query is a SELECT query
+        if query.strip().upper().startswith('SELECT'):
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+            return rows
+        else:
+            # Commit the changes
+            self.cursor.commit()
+            return None
 
     def close(self):
         """
