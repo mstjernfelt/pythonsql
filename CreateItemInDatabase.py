@@ -1,4 +1,4 @@
-from models.database.table.item import Item
+from models.database.item import Item
 
 # Fetch items from the database
 myItems = Item()
