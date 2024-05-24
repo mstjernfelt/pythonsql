@@ -1,0 +1,7 @@
+{
+    "server_name": "slp",
+    "database": "CRONUS",
+    "username": "admin",
+    "password": "Bright2021!",
+    "driver": "ODBC Driver 17 for SQL Server"
+}

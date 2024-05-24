@@ -1,29 +1,23 @@
 import pyodbc
-from models.system import database
+from models.system import settings
 
 
 class sqlserver:
     """
     This class is responsible for connecting to a SQL Server database and executing queries.
     """
-
-    settings = database.database()
+    # Load the settings from the config.json file
+    config = settings.load_settings()
 
     def __init__(self):
         """
         The constructor for SQLServerConnector class.
-
-        Parameters:
-            server (str): The server name.
-            database (str): The database name.
-            username (str): The username for the database.
-            password (str): The password for the database.
         """
-        self.server = self.settings.server_name
-        self.database = self.settings.database
-        self.username = self.settings.username
-        self.password = self.settings.password
-        self.driver = '{ODBC Driver 17 for SQL Server}'
+        self.server = self.config.server_name
+        self.database = self.config.server_name
+        self.username = self.config.username
+        self.password = self.config.password
+        self.driver = self.config.driver
 
     def connect(self):
         """
